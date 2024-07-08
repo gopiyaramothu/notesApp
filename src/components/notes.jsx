@@ -1,7 +1,7 @@
 import React, { createRef, useEffect, useRef, useState } from 'react'
 import Note from './note'
 const Notes = ({notes = [], setNotes= () => {}}) => {
-    const [counter, setCounter] = useState(3);
+    const [counter, setCounter] = useState(localStorage.getItem('counter') ? Number(localStorage.getItem('counter')) : 3);
     useEffect(()=>{
 
         const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -20,6 +20,10 @@ const Notes = ({notes = [], setNotes= () => {}}) => {
         setNotes(updatedNotes);
         localStorage.setItem('notes', JSON.stringify(updatedNotes));
     }, [notes.length]);
+
+    useEffect(() => {
+        localStorage.setItem('counter', counter);
+    }, [counter])
 
     const noteRefs = useRef([]);
 
@@ -109,6 +113,7 @@ const Notes = ({notes = [], setNotes= () => {}}) => {
         setNotes(updatedNotes);
        localStorage.setItem('notes', JSON.stringify(updatedNotes));
        setCounter(counter+1);
+       document.getElementById('newNote').value = "";
     }
 
     const closeHandler = (id) => {
