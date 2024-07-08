@@ -117,10 +117,13 @@ const Notes = ({notes = [], setNotes= () => {}}) => {
     }
 
     const closeHandler = (id) => {
-        const updatedNotes = notes.filter((note) => note.id !== id);
-        setNotes(updatedNotes);
-        localStorage.setItem('notes', JSON.stringify(updatedNotes));
-        setCounter(counter-1);
+        var result = window.confirm("Is Task Completed?");
+        if (result) {
+            const updatedNotes = notes.filter((note) => note.id !== id);
+            setNotes(updatedNotes);
+            localStorage.setItem('notes', JSON.stringify(updatedNotes));
+            setCounter(counter-1);
+        }
     }
 
   return (
